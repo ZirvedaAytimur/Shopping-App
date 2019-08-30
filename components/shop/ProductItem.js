@@ -1,31 +1,43 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, Button, TouchableOpacity, TouchableNativeFeedback, Platform } from 'react-native';
 
 import Colors from '../../constants/Colors';
 
 const ProductItem = props => {
+    let TouchableCmp = TouchableOpacity;
+
+    if (Platform.OS === 'android' && Platform.Version >= 21) {
+        TouchableCmp = TouchableNativeFeedback;
+    }
+
     return (
         <View style={sytles.product}>
-            <View style={sytles.imageContainer}>
-                <Image style={sytles.image} source={{ uri: props.image }} />
+            <View style={sytles.touchable}>
+                <TouchableCmp onPress={props.onViewDetail} useForeground>
+                    <View>
+                        <View style={sytles.imageContainer}>
+                            <Image style={sytles.image} source={{ uri: props.image }} />
+                        </View>
+                        <View style={sytles.details}>
+                            <Text style={sytles.title}>{props.title}</Text>
+                            <Text style={sytles.price}>${props.price.toFixed(2)}</Text>
+                        </View>
+                        <View style={sytles.actions}>
+                            <Button
+                                color={Colors.primary}
+                                title="View Details"
+                                onPress={props.onViewDetail}
+                            />
+                            <Button
+                                color={Colors.primary}
+                                title="To Cart"
+                                onPress={props.onAddToCart}
+                            />
+                        </View>
+                    </View>
+                </TouchableCmp>
             </View>
-            <View style={sytles.details}>
-                <Text style={sytles.title}>{props.title}</Text>
-                <Text style={sytles.price}>${props.price.toFixed(2)}</Text>
-            </View>
-            <View style={sytles.actions}>
-                <Button
-                    color={Colors.primary}
-                    title="View Details"
-                    onPress={props.onViewDetail}
-                />
-                <Button
-                    color={Colors.primary}
-                    title="To Cart"
-                    onPress={props.onAddToCart}
-                />
-            </View>
-        </View>
+        </View >
     );
 };
 
@@ -72,6 +84,10 @@ const sytles = StyleSheet.create({
         height: '15%',
         padding: 10
     },
+    touchable: {
+        borderRadius: 10,
+        overflow: 'hidden'
+    }
 });
 
 export default ProductItem;
