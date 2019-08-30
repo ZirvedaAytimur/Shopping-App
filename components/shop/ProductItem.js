@@ -65,10 +65,12 @@ const sytles = StyleSheet.create({
         overflow: 'hidden'
     },
     title: {
+        fontFamily: 'open-sans-bold',
         fontSize: 18,
-        marginVertical: 4
+        marginVertical: 2
     },
     price: {
+        fontFamily: 'open-sans',
         fontSize: 14,
         color: '#888'
     },
