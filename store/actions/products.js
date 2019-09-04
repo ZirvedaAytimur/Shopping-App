@@ -47,6 +47,11 @@ export const deleteProduct = productId => {
         const responce = await fetch(`https://shop-app-952c9.firebaseio.com/products/${productId}.json`, {
             method: 'DELETE',
         });
+
+        if (!responce.ok) {
+            throw new Error('Something went wrong.');
+        }
+
         dispatch({
             type: DELETE_PRODUCT,
             pid: productId
@@ -88,7 +93,7 @@ export const createProduct = (title, description, imageUrl, price) => {
 export const updateproduct = (id, title, description, imageUrl) => {
     return async dispatch => {
 
-        await fetch(`https://shop-app-952c9.firebaseio.com/products/${id}.json`, {
+        const responce = await fetch(`https://shop-app-952c9.firebaseio.com/products/${id}.json`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -99,6 +104,10 @@ export const updateproduct = (id, title, description, imageUrl) => {
                 imageUrl
             })
         });
+
+        if (!responce.ok) {
+            throw new Error('Something went wrong.');
+        }
 
         dispatch({
             type: UPDATE_PRODUCT,
