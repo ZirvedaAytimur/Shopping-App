@@ -54,6 +54,7 @@ const OrdersNavigator = createStackNavigator(
     {
         Orders: OrdersScreen
     },
+    
     {
         navigationOptions: {
             drawerIcon: drawerConfig => (
